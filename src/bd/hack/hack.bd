@@ -1,0 +1,227 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0xD2FE5A30D1CC9756",
+      "device": "xc7a35ticsg324-1L",
+      "name": "hack",
+      "rev_ctrl_bd_flag": "RevCtrlBdOff",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2020.1"
+    },
+    "design_tree": {
+      "instr_mem_0": "",
+      "data_mem_0": "",
+      "clk_wiz_0": "",
+      "cpu_0": ""
+    },
+    "ports": {
+      "sys_clock": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "FREQ_HZ": {
+            "value": "100000000"
+          },
+          "PHASE": {
+            "value": "0.000"
+          }
+        }
+      },
+      "reset": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "POLARITY": {
+            "value": "ACTIVE_LOW"
+          }
+        }
+      }
+    },
+    "components": {
+      "instr_mem_0": {
+        "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
+        "xci_name": "hack_blk_mem_gen_0_1",
+        "parameters": {
+          "Enable_32bit_Address": {
+            "value": "false"
+          },
+          "Enable_A": {
+            "value": "Always_Enabled"
+          },
+          "Memory_Type": {
+            "value": "Single_Port_ROM"
+          },
+          "Port_A_Write_Rate": {
+            "value": "0"
+          },
+          "Register_PortA_Output_of_Memory_Primitives": {
+            "value": "true"
+          },
+          "Use_RSTA_Pin": {
+            "value": "false"
+          },
+          "Write_Depth_A": {
+            "value": "32768"
+          },
+          "Write_Width_A": {
+            "value": "16"
+          },
+          "use_bram_block": {
+            "value": "Stand_Alone"
+          }
+        }
+      },
+      "data_mem_0": {
+        "vlnv": "xilinx.com:ip:blk_mem_gen:8.4",
+        "xci_name": "hack_blk_mem_gen_1_0",
+        "parameters": {
+          "Enable_32bit_Address": {
+            "value": "false"
+          },
+          "Read_Width_A": {
+            "value": "16"
+          },
+          "Register_PortA_Output_of_Memory_Primitives": {
+            "value": "true"
+          },
+          "Use_Byte_Write_Enable": {
+            "value": "false"
+          },
+          "Use_RSTA_Pin": {
+            "value": "false"
+          },
+          "Write_Depth_A": {
+            "value": "32768"
+          },
+          "Write_Width_A": {
+            "value": "16"
+          },
+          "use_bram_block": {
+            "value": "Stand_Alone"
+          }
+        }
+      },
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "xci_name": "hack_clk_wiz_0_0",
+        "parameters": {
+          "CLK_IN1_BOARD_INTERFACE": {
+            "value": "sys_clock"
+          },
+          "RESET_BOARD_INTERFACE": {
+            "value": "reset"
+          },
+          "USE_BOARD_FLOW": {
+            "value": "true"
+          }
+        }
+      },
+      "cpu_0": {
+        "vlnv": "xilinx.com:module_ref:cpu:1.0",
+        "xci_name": "hack_cpu_0_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "cpu",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I"
+          },
+          "reset": {
+            "type": "rst",
+            "direction": "I"
+          },
+          "in_m": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "instruction": {
+            "direction": "I",
+            "left": "15",
+            "right": "0"
+          },
+          "out_m": {
+            "direction": "O",
+            "left": "15",
+            "right": "0"
+          },
+          "out_pc": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "address_m": {
+            "direction": "O",
+            "left": "14",
+            "right": "0"
+          },
+          "write_m": {
+            "direction": "O"
+          }
+        }
+      }
+    },
+    "nets": {
+      "blk_mem_gen_0_douta": {
+        "ports": [
+          "instr_mem_0/douta",
+          "cpu_0/instruction"
+        ]
+      },
+      "cpu_0_out_pc": {
+        "ports": [
+          "cpu_0/out_pc",
+          "instr_mem_0/addra"
+        ]
+      },
+      "blk_mem_gen_1_douta": {
+        "ports": [
+          "data_mem_0/douta",
+          "cpu_0/in_m"
+        ]
+      },
+      "cpu_0_out_m": {
+        "ports": [
+          "cpu_0/out_m",
+          "data_mem_0/dina"
+        ]
+      },
+      "cpu_0_write_m": {
+        "ports": [
+          "cpu_0/write_m",
+          "data_mem_0/ena"
+        ]
+      },
+      "cpu_0_address_m": {
+        "ports": [
+          "cpu_0/address_m",
+          "data_mem_0/addra"
+        ]
+      },
+      "clk_wiz_clk_out1": {
+        "ports": [
+          "clk_wiz_0/clk_out1",
+          "data_mem_0/clka",
+          "instr_mem_0/clka",
+          "cpu_0/clk"
+        ]
+      },
+      "sys_clock_1": {
+        "ports": [
+          "sys_clock",
+          "clk_wiz_0/clk_in1"
+        ]
+      },
+      "reset_1": {
+        "ports": [
+          "reset",
+          "clk_wiz_0/reset",
+          "cpu_0/reset"
+        ]
+      }
+    }
+  }
+}
